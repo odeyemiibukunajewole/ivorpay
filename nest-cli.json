@@ -1,0 +1,16 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "generateOptions": {
+    "spec": false
+  },
+  "compilerOptions": {
+    "assets": [
+      {
+        "include": "Notification/templates/**/*.ejs",
+        "outDir": "dist/src",
+        "watchAssets": true
+      }
+    ]
+  }
+}

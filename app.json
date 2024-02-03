@@ -1,0 +1,28 @@
+{
+    "name": "Envair",
+    "description": "ToolJet is an open-source low-code framework to build and deploy internal tools.",
+    "repository": "https://gitlab.com/EbereUzodufa/envair",
+    "success_url": "/",
+    "scripts":{
+      "predeploy": "npm install && npm run build"
+    },
+    "env": {
+      "NODE_ENV": {
+        "description": "Environment [production/development]",
+        "value": "production"
+      }
+    },
+    "formation": {
+      "web": {
+        "quantity": 1
+      }
+    },
+    "image": "heroku/nodejs",
+    "addons": ["heroku-postgresql"],
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ],
+    "stack": "heroku-22"
+  }
