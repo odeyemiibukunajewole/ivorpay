@@ -7,7 +7,6 @@ import {
   Post,
   Put,
   Query,
-  ValidationPipe,
 } from '@nestjs/common';
 
 import { RestaurantService } from '../service/restaurant.service';

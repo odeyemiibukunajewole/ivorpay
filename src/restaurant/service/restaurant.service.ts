@@ -10,6 +10,7 @@ import { Restaurant } from 'src/core/entity/restaurant.entity';
 import { DataSource, Point } from 'typeorm';
 import { RestaurantDto } from '../dto/restaurant.dto';
 import { interfaceDto } from '../dto/interface.dto';
+import { IsNumber } from 'class-validator';
 
 @Injectable()
 export class RestaurantService extends BaseRespositoryService<Restaurant> {
@@ -19,45 +20,51 @@ export class RestaurantService extends BaseRespositoryService<Restaurant> {
   }
 
   async findNearbyRestaurants(query: interfaceDto) {
-    try {
-      if (
-        !query.latitude ||
-        !query.latitude ||
-        !Number(query.longitude) ||
-        !Number(query.latitude)
-      ) {
-        throw new NotFoundException();
-      }
+    // try {
 
-      if (query.distance < 0 || !query.distance || !Number(query.latitude)) {
-        throw new BadRequestException();
-      }
-      const origin: Point = {
-        type: 'Point',
-        coordinates: [Number(query.longitude), Number(query.latitude)],
-      };
-      const restaurants = await this.baseRepository
-        .createQueryBuilder('restaurant')
-        .where(
-          `ST_Distance(location, ST_SetSRID(ST_GeomFromGeoJSON(:origin), ST_SRID(location))) > ${Number(
-            query.distance,
-          )}`,
-        )
-        .orderBy(
-          'ST_Distance(location, ST_SetSRID(ST_GeomFromGeoJSON(:origin), ST_SRID(location)))',
-          'ASC',
-        )
-        .setParameters({
-          origin: JSON.stringify(origin),
-        })
-        .getMany();
+    const latitude = Number(query.latitude);
+    const longitude = Number(query.longitude);
 
-      if (!restaurants) {
-        throw new NotFoundException();
-      }
+    const distance = Number(query.distance);
 
-      return { restaurants };
-    } catch (e) {}
+    if (
+      !latitude ||
+      !longitude ||
+      isNaN(latitude) ||
+      isNaN(longitude)
+    ) {
+      throw new NotFoundException();
+    }
+
+    if (distance < 0 || !distance || isNaN(distance)) {
+      throw new BadRequestException();
+    }
+    const origin: Point = {
+      type: 'Point',
+      coordinates: [longitude, latitude],
+    };
+    const restaurants = await this.baseRepository
+      .createQueryBuilder('restaurant')
+      .where(
+        `ST_Distance(location, ST_SetSRID(ST_GeomFromGeoJSON(:origin), ST_SRID(location))) > ${distance}`,
+      )
+      .orderBy(
+        'ST_Distance(location, ST_SetSRID(ST_GeomFromGeoJSON(:origin), ST_SRID(location)))',
+        'ASC',
+      )
+      .setParameters({
+        origin: JSON.stringify(origin),
+      })
+      .getMany();
+
+    if (!restaurants) {
+      throw new NotFoundException();
+    }
+
+    return { restaurants };
+    // } catch (e) {
+    //   console.log(e)
+    // }
   }
 
   async addRestaurant(restaurant: RestaurantDto) {
@@ -108,7 +115,7 @@ export class RestaurantService extends BaseRespositoryService<Restaurant> {
 
   async deleteRestaurant(id: string) {
     try {
-       await this.getRestaurantById(id);
+      await this.getRestaurantById(id);
 
       return {
         response: 'restaurant deleted',
