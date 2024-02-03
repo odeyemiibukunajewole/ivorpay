@@ -10,7 +10,6 @@ import { Restaurant } from 'src/core/entity/restaurant.entity';
 import { DataSource, Point } from 'typeorm';
 import { RestaurantDto } from '../dto/restaurant.dto';
 import { interfaceDto } from '../dto/interface.dto';
-import { IsNumber } from 'class-validator';
 
 @Injectable()
 export class RestaurantService extends BaseRespositoryService<Restaurant> {
