@@ -28,46 +28,151 @@
 
 ## Installation
 
+To get stated and get the app running please follow the instruction below
+
+- I utilizing the nestjs,PosgreSQL and TypeORM for my tech stack for this assignment.
+- The test is diploy to github as my prefered repository.
+- Both the Algorithm question and the restaurant app are incopporated together inside ivorpay folder
+- the restaurant nestjs source code is inside the src folder while the algoritm is inside the algoritm folder.
+
+## Install packages,Test Infrastructure and deploy Infrastructure
+
 ```bash
-$ npm install
+# Clone
+$ https://github.com/odeyemiibukunajewole/ivorpay.git
+
+# install dependencies
+$ deploy": "npm i,
+
+# Postman Collection Link
+$ https://app.getpostman.com/join-team?invite_code=5b4c3157d01608b7fa6e2a0cd576b523
+
 ```
 
 ## Running the app
 
 ```bash
-# development
-$ npm run start
 
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+### API
 
 ```bash
-# unit tests
-$ npm run test
 
-# e2e tests
-$ npm run test:e2e
+# CREATE RESTAURANT
+$ POST   http://localhost:3456/api/v1/restaurants
 
-# test coverage
-$ npm run test:cov
+# input
+{
+    "name": "Cafe Delight",
+    "address": "123 Main St, New York, NYA",
+    "latitude": 40.7114,
+    "longitude": -74.00595
+}
+
+# Output
+{
+    "name": "Cafe Delight",
+    "address": "123 Main St, New York, NYA",
+    "latitude": 40.7114,
+    "longitude": -74.00595,
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            -74.00595,
+            40.7114
+        ]
+    },
+    "id": "9134acbe-3259-4e76-b080-a83e9521d522",
+    "createdAt": "2024-02-03T10:53:45.764Z",
+    "updatedAt": "2024-02-03T10:53:45.764Z"
+
+
+# UPDATE RESTAURANT
+$ PUT   http://localhost:3456/api/v1/restaurants/9cbe493f-25f0-4e6d-8324-99cdddea25e8
+
+# input
+{
+    "name": "Cafe Delight",
+    "address": "123 Main St, New York, NYA",
+    "latitude": 40.7114,
+    "longitude": -74.00595
+}
+
+# Output
+{
+    "name": "Cafe Delight",
+    "address": "123 Main St, New York, NYA",
+    "latitude": 40.7114,
+    "longitude": -74.00595,
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            -74.00595,
+            40.7114
+        ]
+    },
+    "id": "9134acbe-3259-4e76-b080-a83e9521d522",
+    "createdAt": "2024-02-03T10:53:45.764Z",
+    "updatedAt": "2024-02-03T10:53:45.764Z"
+
+# GET RESTAURANT BY ID
+$ POST   http://localhost:3456/api/v1/restaurants/9cbe493f-25f0-4e6d-8324-99cdddea25e8
+
+# input
+{}
+
+# Output
+{
+    "name": "Cafe Delight",
+    "address": "123 Main St, New York, NYA",
+    "latitude": 40.7114,
+    "longitude": -74.00595,
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            -74.00595,
+            40.7114
+        ]
+    },
+    "id": "9134acbe-3259-4e76-b080-a83e9521d522",
+    "createdAt": "2024-02-03T10:53:45.764Z",
+    "updatedAt": "2024-02-03T10:53:45.764Z"
+
+# FIND NEARBY  RESTAURANT
+$ GET   http://localhost:3456/restaurants?city=New York&latitude=40.7128&longitude=-74.0060&distance=100
+
+# input
+{}
+
+# Output
+{
+    "name": "Cafe Delight",
+    "address": "123 Main St, New York, NYA",
+    "latitude": 40.7114,
+    "longitude": -74.00595,
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            -74.00595,
+            40.7114
+        ]
+    },
+    "id": "9134acbe-3259-4e76-b080-a83e9521d522",
+    "createdAt": "2024-02-03T10:53:45.764Z",
+    "updatedAt": "2024-02-03T10:53:45.764Z"
+
+# DELETE RESTAURANT
+$ DELETE   http://localhost:3456/api/v1/restaurants/1
+
+# input
+{}
+
+# Output
+{    "response": "restaurant deleted"
+}
+
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).

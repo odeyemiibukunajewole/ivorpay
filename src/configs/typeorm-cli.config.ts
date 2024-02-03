@@ -12,5 +12,5 @@ export default new DataSource({
   database: configService.get<string>('DB_NAME'),
   logging: configService.get<boolean>('DB_LOGGING'),
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
-  migrations: ['src/core/migrations/*{.ts,.js}', 'src/core/seeds/*{.ts,.js}'],
+  migrations: ['src/core/migrations/*{.ts,.js}'],
 });
